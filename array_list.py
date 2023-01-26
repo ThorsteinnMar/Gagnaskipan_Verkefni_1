@@ -95,7 +95,7 @@ class ArrayList:
         if self.add == True:
             self.size *= 2
             temp_arr = [0] * self.size
-            for i in range(self.size-1):
+            for i in range(self.current_size):
                 temp_arr[i] = self.arr[i]
         else:
             self.size -= 1
@@ -106,7 +106,7 @@ class ArrayList:
                     continue
                 temp_arr[index] = self.arr[i]
                 index += 1
-            self.arr = temp_arr
+        self.arr = temp_arr
 
         #self.size+=1 eða self.size-=1
 
@@ -132,7 +132,24 @@ class ArrayList:
     #Time complexity: O(n) - linear time in size of list
     def insert_ordered(self, value):
         # TODO: remove 'pass' and implement functionality
-        pass
+        if self.ordered_arr == False:
+            raise NotOrdered()
+        if self.size-1 == self.current_size:
+            self.add = True
+            self.resize()
+        for i in range(self.current_size-1, -1, -1):
+            
+            if value >= self.arr[i] or self.arr[i] <= value:
+                for j in range(self.current_size,i,-1):
+                    self.arr[j] = self.arr[j-1]
+                self.arr[i+1] = value
+                self.current_size += 1
+                break
+            
+                
+
+
+        
 
     #Time complexity: O(n) - linear time in size of list
     #Time complexity: O(log n) - logarithmic time in size of list
@@ -146,8 +163,9 @@ class ArrayList:
         pass
     def ordered(self):
         for i in range(self.current_size-1):
-            if self.arr[i] >= self.arr[i+1]:
+            if self.arr[i] > self.arr[i+1]:
                 self.ordered_arr = False
+                break
         if self.current_size == 1:
             self.ordered_arr = True
 
@@ -159,11 +177,10 @@ if __name__ == "__main__":
     # and make sure they are at this indent level
 
     arr_lis = ArrayList(5)
-    arr_lis.insert(4,0)
-    arr_lis.insert(9,1)
-    arr_lis.insert(1,2)
-    arr_lis.prepend(3)
-    arr_lis.remove_at(2)
-    arr_lis.remove_at(2)
+    arr_lis.append(1)
+    arr_lis.append(2)
+    arr_lis.append(3)
+    arr_lis.append(4)
+    arr_lis.insert_ordered(0)
 
     print(str(arr_lis))
