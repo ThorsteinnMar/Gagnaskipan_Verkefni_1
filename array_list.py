@@ -36,7 +36,6 @@ class ArrayList:
         self.last_num_index +=1
         self.ordered()
         
-        
     def insert(self, value, index):
         if index < 0 or index > self.current_size:
             raise IndexOutOfBounds()
@@ -51,11 +50,11 @@ class ArrayList:
         self.ordered()
         
     def append(self, value):
-        if self.current_size == self.last_num_index:
+        if self.current_size == self.size:
             self.add = True
             self.resize()
-        self.arr[self.last_num_index + 1] = value
         self.last_num_index += 1
+        self.arr[self.last_num_index] = value
         self.current_size += 1
         self.ordered()
 
@@ -102,7 +101,7 @@ class ArrayList:
             temp_arr = [0] * self.size
             index = 0
             for i in range(self.size+1):
-                if self.arr[i] == "remove":
+                if self.arr[i] == None:
                     continue
                 temp_arr[index] = self.arr[i]
                 index += 1
@@ -115,11 +114,12 @@ class ArrayList:
         # TODO: remove 'pass' and implement functionality
         if index < 0 or index > self.current_size:
             raise IndexOutOfBounds()
-        self.arr[index] = "remove"
+        self.arr[index] = None
         self.current_size -= 1
         self.add = False
         self.last_num_index -= 1
         self.resize()
+        self.ordered()
 
     #Time complexity: O(1) - constant time
     def clear(self):
@@ -134,41 +134,61 @@ class ArrayList:
         # TODO: remove 'pass' and implement functionality
         if self.ordered_arr == False:
             raise NotOrdered()
-        if self.size-1 == self.current_size:
+        if self.size == self.current_size:
             self.add = True
             self.resize()
-        for i in range(self.current_size-1, -1, -1):
-            
-            if value >= self.arr[i] or self.arr[i] <= value:
+        for i in range(self.current_size+1): ####Stendur að þetta a að vera O(n) veit ekki hvernig maður a að implementa þvi nema maður veit staðsetningu a value
+            if value <= self.arr[i]:
                 for j in range(self.current_size,i,-1):
                     self.arr[j] = self.arr[j-1]
-                self.arr[i+1] = value
+                self.arr[i] = value
                 self.current_size += 1
+                self.last_num_index +=1
                 break
+        else:
+            self.last_num_index +=1
+            self.arr[self.last_num_index] = value
+            self.current_size += 1
             
                 
-
-
-        
-
     #Time complexity: O(n) - linear time in size of list
     #Time complexity: O(log n) - logarithmic time in size of list
     def find(self, value):
         # TODO: remove 'pass' and implement functionality
-        pass
+        if self.ordered_arr == True:
+            return self.binary_search( value, 0, self.current_size-1)
+        return self.linear_search(value)
 
     #Time complexity: O(n) - linear time in size of list
     def remove_value(self, value):
         # TODO: remove 'pass' and implement functionality
         pass
     def ordered(self):
+        self.ordered_arr = True
+        # if self.current_size == 1:
+        #     self.ordered_arr = True
+        #     return
+        
         for i in range(self.current_size-1):
             if self.arr[i] > self.arr[i+1]:
                 self.ordered_arr = False
-                break
-        if self.current_size == 1:
-            self.ordered_arr = True
-
+                return
+        
+    def linear_search(self,value):
+        for index in range(self.current_size):
+            if self.arr[index] == value:
+                return index
+        raise NotFound()
+    def binary_search(self,value,low,high):
+        if high < low:
+            raise NotFound()
+        middle = low + (high-low) // 2
+        if value == self.arr[middle]:
+            return middle
+        elif value > self.arr[middle]:
+            return self.binary_search(value, middle+1, high)
+        else:
+            return self.binary_search(value, low, middle-1)
 
 if __name__ == "__main__":
     pass
@@ -176,11 +196,18 @@ if __name__ == "__main__":
     # Do not add them outside this if statement
     # and make sure they are at this indent level
 
-    arr_lis = ArrayList(5)
+    arr_lis = ArrayList(3)
     arr_lis.append(1)
     arr_lis.append(2)
     arr_lis.append(3)
     arr_lis.append(4)
-    arr_lis.insert_ordered(0)
-
+    arr_lis.append(2)
+    
+    # arr_lis.insert_ordered(0)
+    # arr_lis.insert_ordered(6)
+    # arr_lis.insert_ordered(0)
+    # arr_lis.insert_ordered(-1)
+    print(str(arr_lis))
+    print(arr_lis.find(4))
+    print(arr_lis.ordered_arr)
     print(str(arr_lis))
