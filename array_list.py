@@ -37,7 +37,7 @@ class ArrayList:
         
         
     def insert(self, value, index):
-        if index < 0 or index > self.current_size - 1:
+        if index < 0 or index > self.current_size:
             raise IndexOutOfBounds()
         if self.current_size == self.size:
             self.add = True
