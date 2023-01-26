@@ -37,7 +37,7 @@ class ArrayList:
         
         
     def insert(self, value, index):
-        if index < 0 or index > self.size-1:
+        if index < 0 or index > self.current_size - 1:
             raise IndexOutOfBounds()
         if self.current_size == self.size:
             self.add = True
@@ -61,8 +61,10 @@ class ArrayList:
 
     #Time complexity: O(1) - constant time
     def set_at(self, value, index):
-        # TODO: remove 'pass' and implement functionality
-        pass
+        if index < 0 or index > self.current_size -1:
+            raise IndexOutOfBounds()
+        self.arr[index] = value
+
 
     #Time complexity: O(1) - constant time
     def get_first(self):
@@ -139,6 +141,12 @@ if __name__ == "__main__":
     # add your tests here or in a different file.
     # Do not add them outside this if statement
     # and make sure they are at this indent level
+
+
+    list = []
+
+    print(list[0])
+
 
     arr_lis = ArrayList(5)
     arr_lis.insert(4,0)
