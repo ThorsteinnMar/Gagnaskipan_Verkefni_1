@@ -68,13 +68,19 @@ class ArrayList:
 
     #Time complexity: O(1) - constant time
     def get_first(self):
-        # TODO: remove 'pass' and implement functionality
-        pass
+        if self.current_size == 0:
+            raise Empty()
+        else:
+            return self.arr[0]
+
+        
 
     #Time complexity: O(1) - constant time
     def get_at(self, index):
-        # TODO: remove 'pass' and implement functionality
-        pass
+        if index < 0 or index > self.current_size -1:
+            raise IndexOutOfBounds()
+        else:
+            return self.arr[index] 
 
     #Time complexity: O(1) - constant time
     def get_last(self):
@@ -141,12 +147,6 @@ if __name__ == "__main__":
     # add your tests here or in a different file.
     # Do not add them outside this if statement
     # and make sure they are at this indent level
-
-
-    list = []
-
-    print(list[0])
-
 
     arr_lis = ArrayList(5)
     arr_lis.insert(4,0)
