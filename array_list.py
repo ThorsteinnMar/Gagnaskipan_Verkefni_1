@@ -115,7 +115,7 @@ class ArrayList:
     #Time complexity: O(n) - linear time in size of list
     def remove_at(self, index):
         # TODO: remove 'pass' and implement functionality
-        if index < 0 or index > self.current_size:
+        if index < 0 or index > self.current_size-1:
             raise IndexOutOfBounds()
         self.arr[index] = None
         self.current_size -= 1
@@ -201,7 +201,12 @@ if __name__ == "__main__":
     # and make sure they are at this indent level
 
     arr_lis = ArrayList()
-    arr_lis.prepend({"23 twentythree": 23.23})
-    arr_lis.prepend({"23 twentythree": 23.23})
-
+    arr_lis.append(1)
+    arr_lis.append(1)
+    arr_lis.append(1)
+    arr_lis.append(1)
+    arr_lis.append(1)
+    arr_lis.remove_at(5)
+    arr_lis.insert(2,0)
+    print(arr_lis.get_first())
     print(str(arr_lis))
