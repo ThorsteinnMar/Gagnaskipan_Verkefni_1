@@ -10,9 +10,10 @@ class Empty(Exception):
 class NotOrdered(Exception):
     pass
 
+
 class ArrayList:
-    def __init__(self, size):
-        self.size = size
+    def __init__(self):
+        self.size = 4
         self.arr = [0] * self.size
         self.current_size = 0
         self.last_num_index = -1
@@ -34,7 +35,8 @@ class ArrayList:
         self.arr[0] = value
         self.current_size += 1
         self.last_num_index +=1
-        self.ordered()
+        if self.ordered_arr != False:
+            self.ordered()
         
     def insert(self, value, index):
         if index < 0 or index > self.current_size:
@@ -56,7 +58,8 @@ class ArrayList:
         self.last_num_index += 1
         self.arr[self.last_num_index] = value
         self.current_size += 1
-        self.ordered()
+        if self.ordered_arr != False:
+            self.ordered()
 
     #Time complexity: O(1) - constant time
     def set_at(self, value, index):
@@ -164,12 +167,11 @@ class ArrayList:
         # TODO: remove 'pass' and implement functionality
         pass
     def ordered(self):
-        self.ordered_arr = True
-        # if self.current_size == 1:
-        #     self.ordered_arr = True
-        #     return
         
         for i in range(self.current_size-1):
+            if not isinstance(self.arr[i], int):
+                self.ordered_arr = False
+                break
             if self.arr[i] > self.arr[i+1]:
                 self.ordered_arr = False
                 return
@@ -179,6 +181,7 @@ class ArrayList:
             if self.arr[index] == value:
                 return index
         raise NotFound()
+    
     def binary_search(self,value,low,high):
         if high < low:
             raise NotFound()
@@ -190,24 +193,15 @@ class ArrayList:
         else:
             return self.binary_search(value, low, middle-1)
 
+
 if __name__ == "__main__":
     pass
     # add your tests here or in a different file.
     # Do not add them outside this if statement
     # and make sure they are at this indent level
 
-    arr_lis = ArrayList(3)
-    arr_lis.append(1)
-    arr_lis.append(2)
-    arr_lis.append(3)
-    arr_lis.append(4)
-    arr_lis.append(2)
-    
-    # arr_lis.insert_ordered(0)
-    # arr_lis.insert_ordered(6)
-    # arr_lis.insert_ordered(0)
-    # arr_lis.insert_ordered(-1)
-    print(str(arr_lis))
-    print(arr_lis.find(4))
-    print(arr_lis.ordered_arr)
+    arr_lis = ArrayList()
+    arr_lis.prepend({"23 twentythree": 23.23})
+    arr_lis.prepend({"23 twentythree": 23.23})
+
     print(str(arr_lis))
