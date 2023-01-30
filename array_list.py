@@ -165,7 +165,9 @@ class ArrayList:
     #Time complexity: O(n) - linear time in size of list
     def remove_value(self, value):
         # TODO: remove 'pass' and implement functionality
-        pass
+        index = self.find(value)
+        self.remove_at(index)
+        
     def ordered(self):
         
         for i in range(self.current_size-1):
@@ -206,7 +208,7 @@ if __name__ == "__main__":
     arr_lis.append(1)
     arr_lis.append(1)
     arr_lis.append(1)
-    arr_lis.remove_at(5)
+    arr_lis.remove_value(5)
     arr_lis.insert(2,0)
     print(arr_lis.get_first())
     print(str(arr_lis))
