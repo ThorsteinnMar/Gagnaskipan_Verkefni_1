@@ -13,8 +13,8 @@ class NotOrdered(Exception):
 
 class ArrayList:
     def __init__(self):
-        self.size = 4
-        self.arr = [0] * self.size
+        self.capcity = 4
+        self.arr = [0] * self.capcity
         self.current_size = 0
         self.last_num_index = -1
         self.ordered_arr = True
@@ -22,11 +22,14 @@ class ArrayList:
     def __str__(self):
         string = ""
         for i in range(self.current_size):
-            string += str(self.arr[i]) + ", "
-        return string[:-2]###breyta
+            string += str(self.arr[i])
+        if i != self.current_size - 1:
+            string += ", "
+        return string
+
     
     def prepend(self, value):
-        if self.current_size == self.size:
+        if self.current_size == self.capcity:
             self.add = True
             self.resize()
         
@@ -41,7 +44,7 @@ class ArrayList:
     def insert(self, value, index):
         if index < 0 or index > self.current_size:
             raise IndexOutOfBounds()
-        if self.current_size == self.size:
+        if self.current_size == self.capcity:
             self.add = True
             self.resize()
         self.last_num_index += 1
@@ -52,7 +55,7 @@ class ArrayList:
         self.ordered()
         
     def append(self, value):
-        if self.current_size == self.size:
+        if self.current_size == self.capcity:
             self.add = True
             self.resize()
         self.last_num_index += 1
@@ -95,15 +98,14 @@ class ArrayList:
     def resize(self):
         # TODO: remove 'pass' and implement functionality
         if self.add == True:
-            self.size *= 2
-            temp_arr = [0] * self.size
+            self.capcity *= 2
+            temp_arr = [0] * self.capcity
             for i in range(self.current_size):
                 temp_arr[i] = self.arr[i]
         else:
-            self.size -= 1
-            temp_arr = [0] * self.size
+            temp_arr = [0] * self.capcity
             index = 0
-            for i in range(self.size+1):
+            for i in range(self.current_size+1):
                 if self.arr[i] == None:
                     continue
                 temp_arr[index] = self.arr[i]
@@ -127,31 +129,20 @@ class ArrayList:
     #Time complexity: O(1) - constant time
     def clear(self):
         # TODO: remove 'pass' and implement functionality
-        self.arr = [0] * self.size
-        self.current_size = 0
-        self.last_num_index = -1
-        self.ordered_arr = True
+        self.__init__()
 
     #Time complexity: O(n) - linear time in size of list
     def insert_ordered(self, value):
         # TODO: remove 'pass' and implement functionality
         if self.ordered_arr == False:
             raise NotOrdered()
-        if self.size == self.current_size:
-            self.add = True
-            self.resize()
-        for i in range(self.current_size+1): ####Stendur að þetta a að vera O(n) veit ekki hvernig maður a að implementa þvi nema maður veit staðsetningu a value
-            if value <= self.arr[i]:
-                for j in range(self.current_size,i,-1):
-                    self.arr[j] = self.arr[j-1]
-                self.arr[i] = value
-                self.current_size += 1
-                self.last_num_index +=1
-                break
-        else:
-            self.last_num_index +=1
-            self.arr[self.last_num_index] = value
-            self.current_size += 1
+        if value <= self.arr[0]:
+            return self.prepend(value)
+        if value >= self.arr[self.last_num_index]:
+            return self.append(value)
+        for i in range(self.capcity):
+            if value < self.arr[i]:
+                return self.insert(value,i)
             
                 
     #Time complexity: O(n) - linear time in size of list
